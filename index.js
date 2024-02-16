@@ -25,11 +25,19 @@ app.get("/", function (req, res) {
 app.get("/api/:date", (req, res) => {
   let isnum = /^\d+$/.test(req.params.date);
   const date = new Date(isnum ? parseInt(req.params.date) : req.params.date);
-  res.json({
+  res.json(date.toString() === "Invalid Date" ? { error : "Invalid Date" } : { 
     unix: Math.floor(date.getTime()), 
      utc: date.toUTCString()
   });
 });
+
+app.get("/api/", (req, res) => {
+  const date = new Date();
+  res.json(date === "Invalid Date" ? { error : "Invalid Date" } : { 
+    unix: Math.floor(date.getTime()), 
+     utc: date.toUTCString()
+  });
+})
 
 
 
